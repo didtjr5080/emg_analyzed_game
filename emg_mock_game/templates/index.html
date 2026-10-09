@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Grip Point — EMG Arm Wrestling</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="arena-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">GP</span><div><b>GRIP POINT</b><small>EMG ARM WRESTLING SIMULATOR</small></div></div>
+      <div class="match-state"><i id="stateDot"></i><span>MATCH STATUS</span><b id="gameState">READY</b></div>
+      <div class="match-clock"><span>ROUND TIME</span><b id="gameTime">00:00.0</b></div>
+    </header>
+
+    <main>
+      <section class="arena">
+        <canvas id="gameCanvas" aria-label="실감형 팔씨름 시뮬레이션"></canvas>
+        <div class="arena-vignette"></div>
+        <div class="fighter fighter-you"><span>YOU</span><b id="playerPower">0</b><small>POWER</small></div>
+        <div class="fighter fighter-rival"><span>RIVAL</span><b id="rivalPower">43</b><small>RESISTANCE</small></div>
+        <div class="round-message"><small id="roundLabel">ROUND 1</small><strong id="roundMessage">GET READY</strong></div>
+        <div class="target-callout" id="targetCallout"><span>PIN ZONE</span><i></i></div>
+        <div class="hold-meter"><span>PIN PRESSURE</span><div><i id="holdBar"></i></div><b id="holdValue">0%</b></div>
+        <div id="overWarning" class="over-warning">OVER ACTIVATION</div>
+      </section>
+
+      <aside class="control-deck">
+        <section class="score-card"><span>SCORE</span><strong id="score">0000</strong><small>+100 PER WIN</small></section>
+
+        <section class="muscle-card">
+          <div class="card-heading"><div><small>LIVE MUSCLE LOAD</small><h2>ARM OUTPUT</h2></div><span id="intensityBadge" class="status low">LOW</span></div>
+          <div class="muscle-row biceps"><div class="muscle-icon">B</div><div class="muscle-data"><div><b>BICEPS</b><output id="bicepsValue">0%</output></div><div class="load-track"><i id="bicepsBar"></i><em></em></div><small>DRIVING FORCE</small></div></div>
+          <div class="muscle-row triceps"><div class="muscle-icon">T</div><div class="muscle-data"><div><b>TRICEPS</b><output id="tricepsValue">0%</output></div><div class="load-track"><i id="tricepsBar"></i></div><small>ARM STABILITY</small></div></div>
+          <div class="stability"><span>GRIP STABILITY</span><b id="stabilityValue">100%</b><div><i id="stabilityBar"></i></div></div>
+        </section>
+
+        <section class="fatigue-card"><div><span>FATIGUE LOAD <small>MOCK</small></span><b id="fatigueValue">0%</b></div><div class="fatigue-track"><i id="fatigueBar"></i></div><p id="fatigueHint">Muscles are fresh. Maintain controlled force.</p></section>
+
+        <section class="input-card">
+          <div class="card-heading compact"><div><small>CONTROL SOURCE</small><h2 id="modeLabel">KEYBOARD</h2></div><span class="connected">● CONNECTED</span></div>
+          <div class="mode-buttons"><button data-mode="keyboard" class="active">KEYS</button><button data-mode="slider">MANUAL</button><button data-mode="auto">AUTO EMG</button></div>
+          <div id="keyboardHelp" class="key-controls"><div><kbd>W</kbd><kbd>S</kbd><span>BICEPS<br><small>FORCE</small></span></div><div><kbd>D</kbd><kbd>A</kbd><span>TRICEPS<br><small>STABILITY</small></span></div></div>
+          <div id="sliderControls" class="slider-controls hidden"><label><span>BICEPS <output id="bicepsOutput">0%</output></span><input id="bicepsSlider" type="range" min="0" max="100" value="0"></label><label><span>TRICEPS <output id="tricepsOutput">0%</output></span><input id="tricepsSlider" type="range" min="0" max="100" value="0"></label></div>
+        </section>
+
+        <section class="actions"><button id="startBtn" class="start">START MATCH</button><button id="pauseBtn">PAUSE</button><button id="resetBtn">RESET</button></section>
+      </aside>
+    </main>
+
+    <section class="telemetry"><div class="telemetry-title"><span>EMG TELEMETRY</span><small>LAST 10 SECONDS</small></div><canvas id="historyCanvas"></canvas><div class="legend"><span class="cyan">BICEPS</span><span class="red">TRICEPS</span><span class="gold">FATIGUE</span></div></section>
+    <footer><span>SIMULATION MODE</span><span>Target activation <b>40—70%</b></span><span>Mock fatigue is not a medical measurement</span></footer>
+  </div>
+  <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>
